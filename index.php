@@ -13,7 +13,6 @@
     <link href="assets/css/material.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/home.css">
     <link rel="stylesheet" href="./assets/css/loader.css">
-   
 </head>
     <body>
         <header>
@@ -45,34 +44,75 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12 text-center" style="padding:100px 0px;">
-              <h2 class="text-center" style="color:#333; font-weight:900;">Crear REPORTE por Fecha de Inicio y Fecha Final</h2>
+              <h2 class="text-center" style="color:#333; font-weight:900;">
+                Filtrar REPORTE con Rangos de Fechas Inicio y Final
+              </h2>
+              <p>
+                PHP Ajax y MYSQL
+              </p>
             </div>
           </div>
         </div>
-
 
 
       <section>
           <div class="container">
             <div class="row">
               
-              <div class="col-md-12 text-center" style="padding:100px 0px;">
-              
+              <div class="col-md-12 text-center mt-5">
                 <form action="DescargarReporte_x_fecha.php" method="post" accept-charset="utf-8">
                   <div class="row">
                     <div class="col">
-                      <input type="text" name="fecha_ingreso" class="form-control" id="exampleInputDatePicker1" placeholder="Fecha de Inicio">
+                      <input type="date" name="fecha_ingreso" class="form-control"  placeholder="Fecha de Inicio" required>
                     </div>
                     <div class="col">
-                      <input type="text" name="fechaFin" class="form-control" id="exampleInputDatePicker2" placeholder="Fecha Final">
+                      <input type="date" name="fechaFin" class="form-control" placeholder="Fecha Final" required>
                     </div>
                     <div class="col">
-                      <button type="submit" class="btn btn-danger">Descargar Reporte</button>
+                      <span class="btn btn-dark mb-2" id="filtro">Filtrar</span>
+                      <button type="submit" class="btn btn-danger mb-2">Descargar Reporte</button>
                     </div>
                   </div>
                 </form>
-
               </div>
+
+              <div class="col-md-12 text-center mt-5">     
+                <span id="loaderFiltro">  </span>
+              </div>
+              
+              
+            <div class="table-responsive resultadoFiltro">
+              <table class="table table-hover" id="tableEmpleados">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">NOMBRE Y APELLIDO</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col">TELEFONO</th>
+                    <th scope="col">SUELDO</th>
+                    <th scope="col">FECHA DE INGRESO</th>
+                  </tr>
+                </thead>
+              <?php
+              include('config.php');
+              $sqlTrabajadores = ('SELECT * FROM trabajadores ORDER BY fecha_ingreso ASC');
+              $query = mysqli_query($con, $sqlTrabajadores);
+              $i =1;
+                while ($dataRow = mysqli_fetch_array($query)) { ?>
+                <tbody>
+                  <tr>
+                    <td><?php echo $i++; ?></td>
+                    <td><?php echo $dataRow['nombre'] . ' '. $dataRow['apellido']; ?></td>
+                    <td><?php echo $dataRow['email'] ; ?></td>
+                    <td><?php echo $dataRow['telefono'] ; ?></td>
+                    <td><?php echo '$ '. $dataRow['sueldo'] ; ?></td>
+                    <td><?php echo $dataRow['fecha_ingreso'] ; ?></td>
+                </tr>
+                </tbody>
+              <?php } ?>
+              </table>
+            </div>
+
             </div>
           </div>
       </section>
@@ -113,12 +153,41 @@
       setTimeout(function(){
         $('body').addClass('loaded');
       }, 1000);
-  });
 
-  $('#exampleInputDatePicker1, #exampleInputDatePicker2').pickdate();
 
+//FILTRANDO REGISTROS
+$("#filtro").on("click", function(e){ 
+  e.preventDefault();
+  
+  loaderF(true);
+
+  var f_ingreso = $('input[name=fecha_ingreso]').val();
+  var f_fin = $('input[name=fechaFin]').val();
+  console.log(f_ingreso + '' + f_fin);
+
+  if(f_ingreso !="" && f_fin !=""){
+    $.post("filtro.php", {f_ingreso, f_fin}, function (data) {
+      $("#tableEmpleados").hide();
+      $(".resultadoFiltro").html(data);
+      loaderF(false);
+    });  
+  }else{
+    $("#loaderFiltro").html('<p style="color:red;  font-weight:bold;">Debe seleccionar ambas fechas</p>');
+  }
+} );
+
+
+function loaderF(statusLoader){
+    console.log(statusLoader);
+    if(statusLoader){
+      $("#loaderFiltro").show();
+      $("#loaderFiltro").html('<img class="img-fluid" src="assets/img/cargando.svg" style="left:50%; right: 50%; width:50px;">');
+    }else{
+      $("#loaderFiltro").hide();
+    }
+  }
+});
 </script>
-
 
 </body>
 </html>

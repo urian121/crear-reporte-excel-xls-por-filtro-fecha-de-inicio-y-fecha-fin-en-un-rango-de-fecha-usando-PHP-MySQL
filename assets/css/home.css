@@ -30,7 +30,6 @@ header .contenedor_header {
 
 section {
   width: 100%;
-  position: absolute;
   background-color: #f9f9f9;
 }
 .flex-container {
@@ -61,7 +60,7 @@ section {
     bottom: 0;
     height: 70px;
     color: white;
-    position: absolute;
+  /*  position: absolute;*/
 }
 
 .bi-github, .bi-youtube, .bi-linkedin, .bi-briefcase{
@@ -94,4 +93,10 @@ a:hover{
   .flex-item p{
     font-size: 15px;
   }
+}
+
+
+table thead{
+  background-color: #777 !important;
+  color: #fff !important; 
 }

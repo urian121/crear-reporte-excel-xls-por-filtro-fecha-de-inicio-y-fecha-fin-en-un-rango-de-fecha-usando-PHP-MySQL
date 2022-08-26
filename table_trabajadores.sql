@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2022 a las 20:28:36
+-- Tiempo de generación: 26-08-2022 a las 04:29:41
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -34,7 +34,7 @@ CREATE TABLE `trabajadores` (
   `email` varchar(50) DEFAULT NULL,
   `telefono` varchar(50) DEFAULT NULL,
   `sueldo` varchar(50) DEFAULT NULL,
-  `fecha_ingreso` varchar(50) DEFAULT NULL
+  `fecha_ingreso` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -42,12 +42,14 @@ CREATE TABLE `trabajadores` (
 --
 
 INSERT INTO `trabajadores` (`id`, `nombre`, `apellido`, `email`, `telefono`, `sueldo`, `fecha_ingreso`) VALUES
-(1, 'Urian', 'Viera', 'programadorphp2017@gmail.com', '123', '5000000', '30/05/2022'),
-(2, 'Andres', 'Host', 'andres@gmail.com', '456', '350000', '25/02/2022'),
-(3, 'Brenda', 'Viera', 'brenda@gmail.com', '365', '450000', '13/02/2022'),
-(4, 'Luis', 'Benz', 'luis@gmail.com', '799', '360000', '01/05/2021'),
-(5, 'Genessi', 'Aleman', 'genessi@gmail.com', '741', '2500000', '25/03/2021'),
-(6, 'Alex', 'Gomez', 'alex@gmail.com', '842', '420000', '04/05/2022');
+(1, 'Urian', 'Viera', 'programadorphp2017@gmail.com', '123', '5000000', '2022-06-10'),
+(2, 'Andres', 'Host', 'andres@gmail.com', '456', '350000', '2022-06-15'),
+(3, 'Brenda', 'Viera', 'brenda@gmail.com', '365', '450000', '2022-07-20'),
+(4, 'Luis', 'Benz', 'luis@gmail.com', '799', '360000', '2022-07-30'),
+(5, 'Genessi', 'Aleman', 'genessi@gmail.com', '741', '2500000', '2022-08-05'),
+(6, 'Alex', 'Gomez', 'alex@gmail.com', '842', '420000', '2022-08-12'),
+(7, 'Humberto', 'Ter', 'humberto@gmail.com', '45215', '1900000', '2022-08-13'),
+(8, 'Paula', 'Jara', 'paula@gmail.com', '8521', '3100000', '2022-08-25');
 
 --
 -- Índices para tablas volcadas
@@ -67,7 +69,7 @@ ALTER TABLE `trabajadores`
 -- AUTO_INCREMENT de la tabla `trabajadores`
 --
 ALTER TABLE `trabajadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

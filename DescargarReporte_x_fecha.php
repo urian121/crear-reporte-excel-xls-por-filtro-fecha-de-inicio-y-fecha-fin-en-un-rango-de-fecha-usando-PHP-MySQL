@@ -14,8 +14,8 @@
 <body>
     
 <?php
-date_default_timezone_set("America/Bogota");
-$fecha = date("d/m/Y");
+include('config.php');
+$fecha = date("d_m_Y");
 
 
 /**PARA FORZAR LA DESCARGA DEL EXCEL */
@@ -25,32 +25,21 @@ $filename = "ReporteExcel_" .$fecha. ".xls";
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Disposition: attachment; filename=" . $filename . "");
 
-/**conexion a BD */
-$usuario  = "root";
-$password = "";
-$servidor = "localhost";
-$basededatos = "ejemplo_youtube";
-$con = mysqli_connect($servidor, $usuario, $password) or die("No se ha podido conectar al Servidor");
-mysqli_query($con,"SET SESSION collation_connection ='utf8_unicode_ci'");
-$db = mysqli_select_db($con, $basededatos) or die("Upps! Error en conectar a la Base de Datos");
 
 /***RECIBIENDO LAS VARIABLE DE LA FECHA */
-$fechaInit = $_POST['fecha_ingreso'];
-$fechaFin  = $_POST['fechaFin'];
+$fechaInit = date("Y-m-d", strtotime($_POST['fecha_ingreso']));
+$fechaFin  = date("Y-m-d", strtotime($_POST['fechaFin']));
 
 
 /*
-select * from trabajadores where (created_at>="2019-01-01" and created_at<="2019-01-31") order by created_at desc
-select * from trabajadores where (created_at>="$start" and created_at<="$end") order by created_at desc
-SELECT * FROM trabajadores WHERE created_at BETWEEN "2019-01-01" AND "2019-01-31" order by created_at desc
-SELECT * FROM trabajadores WHERE created_at BETWEEN "$start" AND "$end" order by created_at desc
-SELECT * FROM `trabajadores` WHERE fecha_ingreso BETWEEN '2016-03-20' AND '2016-20-31'
-select * from trabajadores where fecha_ingreso >= '2019-11-06 00:00:00' and fecha_ingreso < '2019-11-07 00:00:00';
-SELECT * FROM trabajadores WHERE fecha_ingreso BETWEEN '$fecha1' AND '$fecha2' ORDER BY fecha_ingreso DESC
-*/
-                       
+$sqlTrabajadores = ("select * from trabajadores where (fecha_ingreso>='$fechaInit' and fecha_ingreso<='$fechaFin') order by fecha_ingreso desc");
+$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE fecha_ingreso BETWEEN '$fechaInit' AND '$fechaFin' order by fecha_ingreso desc
+$sqlTrabajadores = ("SELECT * FROM `trabajadores` WHERE fecha_ingreso BETWEEN '$fechaInit' AND '$fechaFin'
+$sqlTrabajadores = ("select * from trabajadores where fecha_ingreso >= '$fechaInit' and fecha_ingreso < '$fechaFin';
+$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE fecha_ingreso BETWEEN '$fechaInit' AND '$fecha2' ORDER BY fecha_ingreso DESC
+*/                       
 
-$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE fecha_ingreso BETWEEN '$fechaInit' AND '$fechaFin' ORDER BY fecha_ingreso ASC");
+$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE (fecha_ingreso>='$fechaInit' and fecha_ingreso<='$fechaFin') ORDER BY fecha_ingreso ASC");
 $query = mysqli_query($con, $sqlTrabajadores);
 ?>
 
@@ -79,7 +68,6 @@ $i =1;
             <td><?php echo $dataRow['telefono'] ; ?></td>
             <td><?php echo $dataRow['sueldo'] ; ?></td>
             <td><?php echo $dataRow['fecha_ingreso'] ; ?></td>
-
         </tr>
     </tbody>
     
