@@ -45,7 +45,7 @@
           <div class="row">
             <div class="col-md-12 text-center" style="padding:100px 0px;">
               <h3 class="text-center" style="color:#333; font-weight:900;">
-                Filtrar REPORTE con Rangos de Fechas Inicio y Final
+                Filtrar REPORTE con Rango de Fechas Inicio y Final
               </h3>
               <h3 style="color:#D90E1D !important; font-weight:bold;">
                 PHP Ajax y MYSQL
