@@ -3,20 +3,21 @@ sleep(1);
 include('config.php');
 
 /**
- * Nota: Es recomendable guardar la fecha en formato año - mes y dia no es tan importante
- * que el tipo de dato se varchart o date
- * luego con strtotime le podemos cambiar el formato
- * Esta función espera que se proporcione una cadena que contenga un formato de fecha en Inglés US 
- * e intentará convertir ese formato a una fecha Unix dia - mes - año
- */
+ * Nota: Es recomendable guardar la fecha en formato año - mes y dia (2022-08-25)
+ * No es tan importante que el tipo de fecha sea date, puede ser varchar
+ * La funcion strtotime:sirve para cambiar el forma a una fecha,
+ * esta espera que se proporcione una cadena que contenga un formato de fecha en Inglés US,
+ * es decir año-mes-dia e intentará convertir ese formato a una fecha Unix dia - mes - año.
+*/
+
 $fechaInit = date("Y-m-d", strtotime($_POST['f_ingreso']));
 $fechaFin  = date("Y-m-d", strtotime($_POST['f_fin']));
 
-$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE  `fecha_ingreso` BETWEEN '$fechaInit' AND '$fechaFin' ORDER BY fecha_ingreso ASC");
+$sqlTrabajadores = ("SELECT * FROM trabajadores WHERE  `fecha_ingreso` BETWEEN '$fechaInit' AND '$fechaFin' AND sueldo >'350000' ORDER BY fecha_ingreso ASC");
 $query = mysqli_query($con, $sqlTrabajadores);
 //print_r($sqlTrabajadores);
-echo 'Total: '. $total    = mysqli_num_rows($query);
-
+$total   = mysqli_num_rows($query);
+echo '<strong>Total: </strong> ('. $total .')';
 ?>
 
 <table class="table table-hover">
